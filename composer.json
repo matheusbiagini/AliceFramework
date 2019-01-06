@@ -1,0 +1,16 @@
+{
+  "autoload": {
+    "psr-4": {
+      "App\\": "App/",
+      "Infrastructure\\" : "Infrastructure/",
+      "Migration\\" :  "Migration/"
+    }
+  },
+  "require": {
+    "slim/slim": "2.6.2",
+    "symfony/dependency-injection": "v2.6.6",
+    "symfony/config": "v2.6.6",
+    "symfony/yaml": "v2.6.6",
+    "doctrine/orm": "2.*"
+  }
+}

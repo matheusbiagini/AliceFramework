@@ -1,0 +1,7 @@
+routes:
+  test.test:
+    name: test
+    url: /teste
+    controller: App\controller\TestController
+    action.result: testAction
+    method: ["post", "get"]

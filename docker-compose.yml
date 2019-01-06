@@ -1,0 +1,54 @@
+version: '3.5'
+
+services:
+  mysql:
+    image: mysql:5.7
+    env_file:
+      - Docker/env/mysql.env
+    volumes:
+      - database:/var/lib/mysql
+      - ./Migration/Initialization/structure.sql:/docker-entrypoint-initdb.d/structure.sql
+    ports:
+      - 3306:3306
+    networks:
+      - AliceFramework_default
+
+  redis:
+    image: redis:3-alpine
+    networks:
+      - AliceFramework_default
+
+  app:
+    image: matheusbiagini/docker-lamp:dev
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+      - redis
+    depends_on:
+      - mysql
+      - redis
+    env_file:
+      - Docker/env/app.env
+    ports:
+      - 80:80
+    environment:
+      PHP_IDE_CONFIG: "serverName=aliceframework.com"
+    networks:
+      - AliceFramework_default
+
+  selenium:
+    image: selenium/standalone-chrome
+    shm_size: '2gb'
+    links:
+      - app:test.com
+    networks:
+      - AliceFramework_default
+
+volumes:
+  database:
+
+networks:
+  AliceFramework_default:
+    driver: bridge
+    name: AliceFramework_default
