@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Kernel;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 abstract class ServiceContainer
 {
@@ -16,7 +16,7 @@ abstract class ServiceContainer
         self::$SERVICE_CONTAINER = $container;
     }
 
-    public static function get() : ContainerInterface
+    public static function get() : Container
     {
         return self::$SERVICE_CONTAINER;
     }

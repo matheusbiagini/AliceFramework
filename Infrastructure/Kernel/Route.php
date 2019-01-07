@@ -9,13 +9,37 @@ use Slim\Slim;
 
 class Route
 {
+    /** @var string  */
+    private const ROUTE_PATH = '../Config/Route.yml';
+
     /** @var mixed[] $routes */
     private $routes;
 
-    private function extractRoutes() : void
+    public function __construct()
+    {
+        $this->extract();
+    }
+
+    public function make(Slim $slim) : void
+    {
+        foreach ($this->getRoutes()['routes'] as $route) {
+            $gateway = $route['controller'].':'.$route['action.result'];
+            foreach ($route['method'] as $method) {
+                $method = (string) strtolower($method);
+                $slim
+                    ->{$method}((string)$route['url'], $gateway)
+                    ->via(strtoupper($method))
+                    ->name((string) $route['name']);
+            }
+        }
+
+        $slim->run();
+    }
+
+    private function extract() : void
     {
         $this->setRoutes(
-            (new Parser())->parse(file_get_contents('Config/Route.yml'))
+            (new Parser())->parse(file_get_contents(self::ROUTE_PATH))
         );
     }
 
@@ -27,21 +51,5 @@ class Route
     private function getRoutes() : array
     {
         return $this->routes;
-    }
-
-    public function make(Slim $slim) : void
-    {
-        $this->extractRoutes();
-        $routes = $this->getRoutes()['routes'];
-
-        foreach ($routes as $key => $route) {
-            foreach ($route['method'] as $method) {
-                $method = (string) strtolower($method);
-                $slim
-                    ->{$method}((string)$route['url'], $route['controller'].':'.$route['action.result'])
-                    ->via(strtoupper($method))
-                    ->name((string) $route['name']);
-            }
-        }
     }
 }

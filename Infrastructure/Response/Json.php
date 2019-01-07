@@ -12,17 +12,11 @@ class Json implements Response
     public function __construct(array $arguments = [])
     {
         $this->arguments = $arguments;
+        $this->render($this->arguments);
     }
 
-    private function json(array $arguments) : string
+    public function render(array $arguments = []) : void
     {
-        return json_encode($arguments);
+        echo json_encode($arguments);
     }
-
-    public function __toString()
-    {
-        echo $this->json($this->arguments);
-    }
-
-
 }
