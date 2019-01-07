@@ -11,6 +11,7 @@ class TestController extends Controller
 {
     public function testAction() : Response
     {
-        return $this->json(['hello' => 'hello world']);
+        //return $this->json(['hello' => 'hello world']);
+        return $this->render('Test/test.html.twig', ['hello' => 'hello world']);
     }
 }

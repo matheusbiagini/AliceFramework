@@ -11,10 +11,14 @@ use Infrastructure\Response\TemplateEngine;
 
 class AbstractController
 {
-    /** @return mixed */
+    /**
+     * @param string $serviceName
+     * @return mixed
+     * @throws \Exception
+     */
     public function getService(string $serviceName)
     {
-        return ServiceContainer::get($serviceName);
+        return ServiceContainer::get()->get($serviceName);
     }
 
     public function json(array $arguments = []) : Response
@@ -25,5 +29,11 @@ class AbstractController
     public function render(string $template, array $arguments = []) : Response
     {
         return new TemplateEngine($template, $arguments);
+    }
+
+    public function view(string $template, array $arguments = []) : string
+    {
+        $templateEngine = new TemplateEngine($template, $arguments, false);
+        return $templateEngine->content($arguments);
     }
 }

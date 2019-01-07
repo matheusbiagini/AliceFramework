@@ -17,6 +17,8 @@ class Json implements Response
 
     public function render(array $arguments = []) : void
     {
+        header('Content-type: application/json');
         echo json_encode($arguments);
+        exit;
     }
 }
