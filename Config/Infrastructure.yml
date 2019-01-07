@@ -1,3 +1,6 @@
 services:
   configuration:
     class: Infrastructure\Kernel\Configuration
+
+  session:
+    class: Infrastructure\Data\Session

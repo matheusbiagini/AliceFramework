@@ -6,6 +6,7 @@ namespace App\Service\User;
 
 use App\Entity\Domain\User;
 use App\Repository\Domain\UserRepository;
+use App\Service\Util\Cryptographer;
 
 class UserService
 {
@@ -24,7 +25,7 @@ class UserService
             ->set('id_profile', $profileId)
             ->set('name', $name)
             ->set('email', $email)
-            ->set('password', $password)
+            ->set('password', Cryptographer::hash($password))
             ->set('status', $status);
 
         return $user->flush();

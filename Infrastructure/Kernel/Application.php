@@ -21,6 +21,7 @@ class Application
 
         #Charset UTF-8 AND America/Sao_Paulo
         header('Content-Type: text/html; charset=UTF-8', true);
+        session_start();
         setlocale(LC_ALL, null);
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         setlocale(LC_MONETARY,"pt_BR", "ptb");

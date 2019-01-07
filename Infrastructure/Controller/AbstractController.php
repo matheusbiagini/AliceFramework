@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infrastructure\Controller;
 
+use App\Service\Util\Token;
+use Infrastructure\Data\Session;
 use Infrastructure\Kernel\Configuration;
 use Infrastructure\Kernel\ServiceContainer;
 use Infrastructure\Response\Json;
@@ -41,5 +43,20 @@ abstract class AbstractController
     {
         $templateEngine = new TemplateEngine($template, $arguments, false);
         return $templateEngine->content($arguments);
+    }
+
+    protected function getSession() : Session
+    {
+        return $this->getService('session');
+    }
+
+    protected function createToken(array $payload) : string
+    {
+        return Token::encode($payload, $this->getConfiguration()->get('SECRET'));
+    }
+
+    protected function getToken(string $token) : array
+    {
+        return Token::decode($token, $this->getConfiguration()->get('SECRET'));
     }
 }
