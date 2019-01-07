@@ -1,5 +1,5 @@
 # Project Files
-/docker/env/*.env
+/Docker/env/*.env
 /package-lock.json
 /docker-compose.override.yml
 .vagrant
@@ -37,3 +37,4 @@ composer.phar
 .idea
 /nbproject/*
 CachedContainer.php
+/App/Controller/Test/TestController.php

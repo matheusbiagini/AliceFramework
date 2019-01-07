@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Test;
 
 use Infrastructure\Controller\AbstractController as Controller;
 use Infrastructure\Response\Response;
