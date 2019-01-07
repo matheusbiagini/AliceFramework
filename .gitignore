@@ -35,6 +35,6 @@ composer.phar
 .idea
 /nbproject/*
 CachedContainer.php
+/Docker/env/*.env
 /App/Controller/Test/TestController.php
 /.idea/*
-*.env
