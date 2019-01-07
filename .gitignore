@@ -38,3 +38,4 @@ CachedContainer.php
 /App/Controller/Test/TestController.php
 /.idea/*
 /Docker/env/*.env
+!.gitignore
