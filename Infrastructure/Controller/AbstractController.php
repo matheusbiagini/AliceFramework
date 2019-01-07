@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Controller;
 
+use Infrastructure\Kernel\Configuration;
 use Infrastructure\Kernel\ServiceContainer;
 use Infrastructure\Response\Json;
 use Infrastructure\Response\Response;
@@ -19,6 +20,11 @@ class AbstractController
     public function getService(string $serviceName)
     {
         return ServiceContainer::get()->get($serviceName);
+    }
+
+    public function getConfiguration() : Configuration
+    {
+        return $this->getService('configuration');
     }
 
     public function json(array $arguments = []) : Response

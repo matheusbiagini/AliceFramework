@@ -8,4 +8,4 @@ use Infrastructure\Kernel\Application;
 use Infrastructure\Kernel\DependencyInjection;
 
 $application = new Application(new DependencyInjection());
-$application->main(MODE);
+$application->main();

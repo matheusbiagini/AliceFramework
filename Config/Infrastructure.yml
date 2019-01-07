@@ -1,0 +1,3 @@
+services:
+  configuration:
+    class: Infrastructure\Kernel\Configuration

@@ -15,8 +15,10 @@ class Application
         $this->dependencyInjection = $dependencyInjection;
     }
 
-    public function main(string $mode = 'dev') : void
+    public function main() : void
     {
+        ServiceContainer::set($this->dependencyInjection->getContainer());
+
         #Charset UTF-8 AND America/Sao_Paulo
         header('Content-Type: text/html; charset=UTF-8', true);
         setlocale(LC_ALL, null);
@@ -28,11 +30,17 @@ class Application
         #Error handle
         define('ERR_LEVEL', E_ALL);
         error_reporting(ERR_LEVEL);
-        ini_set('log_errors', '1');
-        ini_set('error_reporting', "{ERR_LEVEL}");
-        ini_set('display_errors', DEBUG == true ? '1' : '0');
-        ini_set('display_startup_erros', DEBUG == true ? '1' : '0');
-        ServiceContainer::set($this->dependencyInjection->getContainer());
+        $debug = '0';
+
+        if($this->getConfiguration()->get('MODE', 'dev') === 'dev') {
+            $debug = '1';
+        }
+
+        ini_set('log_errors', $debug);
+        ini_set('display_errors', $debug);
+        ini_set('display_startup_erros', $debug);
+
+
         $this->buildRouting();
     }
 
@@ -40,5 +48,10 @@ class Application
     {
         $route = new Route();
         $route->make(new Slim());
+    }
+
+    private function getConfiguration() : Configuration
+    {
+        return ServiceContainer::get()->get('configuration');
     }
 }
