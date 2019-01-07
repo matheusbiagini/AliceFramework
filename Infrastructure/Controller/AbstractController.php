@@ -10,34 +10,34 @@ use Infrastructure\Response\Json;
 use Infrastructure\Response\Response;
 use Infrastructure\Response\TemplateEngine;
 
-class AbstractController
+abstract class AbstractController
 {
     /**
      * @param string $serviceName
      * @return mixed
      * @throws \Exception
      */
-    public function getService(string $serviceName)
+    protected function getService(string $serviceName)
     {
         return ServiceContainer::get()->get($serviceName);
     }
 
-    public function getConfiguration() : Configuration
+    protected function getConfiguration() : Configuration
     {
         return $this->getService('configuration');
     }
 
-    public function json(array $arguments = []) : Response
+    protected function json(array $arguments = []) : Response
     {
         return new Json($arguments);
     }
 
-    public function render(string $template, array $arguments = []) : Response
+    protected function render(string $template, array $arguments = []) : Response
     {
         return new TemplateEngine($template, $arguments);
     }
 
-    public function view(string $template, array $arguments = []) : string
+    protected function view(string $template, array $arguments = []) : string
     {
         $templateEngine = new TemplateEngine($template, $arguments, false);
         return $templateEngine->content($arguments);
