@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Test;
 
 use Infrastructure\Controller\AbstractController as Controller;
+use Infrastructure\Request\Request;
 use Infrastructure\Response\Response;
 
 class TestController extends Controller
 {
-    public function testAction() : Response
+    public function testAction(Request $request) : Response
     {
         //return $this->json(['hello' => 'hello world']);
         return $this->render('Test/test.html.twig', ['hello' => 'hello world']);

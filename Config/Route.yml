@@ -11,3 +11,15 @@ routes:
     controller: App\Controller\User\UserController
     action.result: createAction
     method: ["post", "get"]
+
+  - name: userGetAll
+    url: /users
+    controller: App\Controller\User\UserController
+    action.result: getAllAction
+    method: ["get"]
+
+  - name: userGetById
+    url: /user
+    controller: App\Controller\User\UserController
+    action.result: getByIdAction
+    method: ["get"]

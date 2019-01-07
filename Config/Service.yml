@@ -1,3 +1,7 @@
 services:
+  user.repository:
+    class: App\Repository\Domain\UserRepository
+
   user.service:
     class: App\Service\User\UserService
+    arguments: ['@user.repository']

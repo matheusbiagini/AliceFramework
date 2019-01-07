@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Kernel;
 
+use Infrastructure\Request\CreateRequest;
 use Symfony\Component\Yaml\Parser;
 use Slim\Slim;
 
@@ -23,11 +24,13 @@ class Route
     public function make(Slim $slim) : void
     {
         foreach ($this->getRoutes()['routes'] as $route) {
-            $gateway = $route['controller'].':'.$route['action.result'];
             foreach ($route['method'] as $method) {
                 $method = (string) strtolower($method);
                 $slim
-                    ->{$method}((string)$route['url'], $gateway)
+                    ->{$method}((string)$route['url'], function() use ($route) {
+                        $controller = new $route['controller']();
+                        $controller->{$route['action.result']}(new CreateRequest());
+                    })
                     ->via(strtoupper($method))
                     ->name((string) $route['name']);
             }
