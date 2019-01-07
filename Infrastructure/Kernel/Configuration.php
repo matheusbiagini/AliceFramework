@@ -24,8 +24,10 @@ class Configuration
 
     private function getEnvironments() : array
     {
-        $parsed = parse_ini_file('../Docker/env/app.env');
-        $parsed = array_merge($parsed, getenv());
-        return $parsed;
+        return array_merge(
+            parse_ini_file('../Docker/env/app.env'),
+            parse_ini_file('../Docker/env/mysql.env'),
+            getenv()
+        );
     }
 }

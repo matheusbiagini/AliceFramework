@@ -1,1 +1,3 @@
 services:
+  user.service:
+    class: App\Service\User\UserService

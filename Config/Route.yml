@@ -5,3 +5,9 @@ routes:
     controller: App\Controller\Test\TestController
     action.result: testAction
     method: ["post", "get"]
+
+  - name: userCreate
+    url: /user/new
+    controller: App\Controller\User\UserController
+    action.result: createAction
+    method: ["post", "get"]
