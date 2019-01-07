@@ -6,5 +6,5 @@
 
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^((?s).*)$ index.php?_url=/$1 [QSA,L]
+	RewriteRule ^((?s).*)$ app.php?_url=/$1 [QSA,L]
 </IfModule>

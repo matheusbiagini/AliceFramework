@@ -15,6 +15,26 @@ class CreateRequest implements Request
         return $this->getParams()[$key];
     }
 
+    public function getServer() : array
+    {
+        return $_SERVER;
+    }
+
+    public function getBody() : string
+    {
+        return file_get_contents("php://input");
+    }
+
+    public function getStatusCode() : int
+    {
+        return http_response_code();
+    }
+
+    public function json() : string
+    {
+        return json_encode($this->getBody());
+    }
+
     private function getParams() : array
     {
         return $_REQUEST;
