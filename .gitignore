@@ -1,7 +1,6 @@
 # Project Files
 /Docker/env/*.env
 /package-lock.json
-/docker-compose.override.yml
 .vagrant
 /codeception.yml
 /.phpstorm_helpers/
