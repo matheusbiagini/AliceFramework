@@ -1,5 +1,4 @@
 # Project Files
-/Docker/env/*.env
 /package-lock.json
 .vagrant
 /codeception.yml
@@ -37,3 +36,5 @@ composer.phar
 /nbproject/*
 CachedContainer.php
 /App/Controller/Test/TestController.php
+/.idea/*
+/Docker/env/*.env
