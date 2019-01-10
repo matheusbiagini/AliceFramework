@@ -24,9 +24,15 @@ class Configuration
 
     private function getEnvironments() : array
     {
+        $rootPath = getcwd();
+
+        if (PHP_SAPI !== 'cli') {
+            $rootPath = '..';
+        }
+
         return array_merge(
-            parse_ini_file('../Docker/env/app.env'),
-            parse_ini_file('../Docker/env/mysql.env'),
+            parse_ini_file($rootPath . '/Docker/env/app.env'),
+            parse_ini_file($rootPath . '/Docker/env/mysql.env'),
             getenv()
         );
     }

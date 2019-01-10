@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/vendor/autoload.php';
+
+use AliceMigration\Management\Configuration\Configuration;
+use AliceMigration\Migration\Migration;
+
+$migration = new Migration(
+    new Configuration(
+        \Infrastructure\Database\Connection::getInstance()->getPdo(),
+        getcwd() . "/Migration/",
+        'Migration'
+    )
+);
+
+$migration->run();
