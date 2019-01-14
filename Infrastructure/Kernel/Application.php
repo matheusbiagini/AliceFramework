@@ -41,6 +41,7 @@ class Application
         ini_set('display_errors', $debug);
         ini_set('display_startup_erros', $debug);
 
+        include '../Config/Global.php';
 
         $this->buildRouting();
     }

@@ -10,9 +10,14 @@ use Infrastructure\Response\Response;
 
 class TestController extends Controller
 {
+    /** @var string[]  */
+    protected $freeActions = [
+        'testAction',
+    ];
+
     public function testAction(Request $request) : Response
     {
-        //return $this->json(['hello' => 'hello world']);
-        return $this->render('Test/test.html.twig', ['hello' => 'hello world']);
+        return $this->json(['hello' => 'hello world']);
+        //return $this->render('Test/test.html.twig', ['hello' => 'hello world']);
     }
 }

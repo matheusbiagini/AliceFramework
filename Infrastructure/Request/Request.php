@@ -11,4 +11,5 @@ interface Request
     public function getBody() : string;
     public function getStatusCode() : int;
     public function json() : string;
+    public function isAjax() : bool;
 }

@@ -6,6 +6,18 @@ routes:
     action.result: testAction
     method: ["post", "get"]
 
+  - name: logoff
+    url: /logoff
+    controller: App\Controller\Auth\AuthController
+    action.result: logoffAction
+    method: ["post", "get"]
+
+  - name: login
+    url: /login
+    controller: App\Controller\Auth\AuthController
+    action.result: loginAction
+    method: ["post", "get"]
+
   - name: userCreate
     url: /user/new
     controller: App\Controller\User\UserController

@@ -21,15 +21,33 @@ class Route
         $this->extract();
     }
 
+    public static function url(string $routeName, array $params = []) : string
+    {
+        $self = new self();
+
+        foreach ($self->getRoutes()['routes'] as $route) {
+            if ($route['name'] === $routeName) {
+                if (count($params) === 0) {
+                    return $route['url'];
+                }
+
+                return $route['url'] . '?' . http_build_query($params);
+            }
+        }
+
+        return '';
+    }
+
     public function make(Slim $slim) : void
     {
         foreach ($this->getRoutes()['routes'] as $route) {
             foreach ($route['method'] as $method) {
-                $method = (string) strtolower($method);
+                $request = new CreateRequest();
+                $method  = (string) strtolower($method);
                 $slim
-                    ->{$method}((string)$route['url'], function() use ($route) {
-                        $controller = new $route['controller']();
-                        $controller->{$route['action.result']}(new CreateRequest());
+                    ->{$method}((string)$route['url'], function() use ($route, $request) {
+                        $controller = new $route['controller']($request, $route['action.result']);
+                        $controller->{$route['action.result']}($request);
                     })
                     ->via(strtoupper($method))
                     ->name((string) $route['name']);

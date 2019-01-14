@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infrastructure\Response;
 
+use Infrastructure\View\Twig\Helper\Helper;
+
 class TemplateEngine implements Response
 {
     /** @var string */
@@ -20,6 +22,8 @@ class TemplateEngine implements Response
         $this->twig     = new \Twig_Environment(new \Twig_Loader_Filesystem([self::PATH]));
         $this->template = $template;
 
+        $this->createHelpers();
+
         if (!$print) {
             return;
         }
@@ -35,5 +39,10 @@ class TemplateEngine implements Response
     public function content(array $arguments = []) : string
     {
         return $this->twig->render($this->template, $arguments);
+    }
+
+    public function createHelpers() : void
+    {
+        $this->twig->addGlobal('helper', new Helper());
     }
 }

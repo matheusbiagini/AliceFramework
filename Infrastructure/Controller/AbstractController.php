@@ -12,7 +12,7 @@ use Infrastructure\Response\Json;
 use Infrastructure\Response\Response;
 use Infrastructure\Response\TemplateEngine;
 
-abstract class AbstractController
+abstract class AbstractController extends AuthenticatorController
 {
     /**
      * @param string $serviceName
@@ -58,5 +58,11 @@ abstract class AbstractController
     protected function getToken(string $token) : array
     {
         return Token::decode($token, $this->getConfiguration()->get('SECRET'));
+    }
+
+    protected function redirect(string $routeName, array $params = []) : Response
+    {
+        header('Location: ' . url($routeName, $params));
+        return $this->json();
     }
 }

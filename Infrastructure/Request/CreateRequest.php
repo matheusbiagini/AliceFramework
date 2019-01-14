@@ -39,4 +39,9 @@ class CreateRequest implements Request
     {
         return $_REQUEST;
     }
+
+    public function isAjax() : bool
+    {
+        return isset($this->getServer()['HTTP_X_REQUESTED_WITH']) && $this->getServer()['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+    }
 }
