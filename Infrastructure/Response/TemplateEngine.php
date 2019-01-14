@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infrastructure\Response;
 
 use Infrastructure\Data\Session;
+use Infrastructure\Translation\Translate;
 use Infrastructure\View\Twig\Helper\Helper;
 
 class TemplateEngine implements Response
@@ -42,9 +43,10 @@ class TemplateEngine implements Response
         return $this->twig->render($this->template, $arguments);
     }
 
-    public function createHelpers() : void
+    private function createHelpers() : void
     {
         $this->twig->addGlobal('helper', new Helper());
         $this->twig->addGlobal('session', Session::session());
+        $this->twig->addGlobal('language', Translate::getInstance());
     }
 }

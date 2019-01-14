@@ -4,3 +4,6 @@ services:
 
   session:
     class: Infrastructure\Data\Session
+
+  cookie:
+    class: Infrastructure\Data\Cookie

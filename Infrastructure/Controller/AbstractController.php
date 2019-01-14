@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infrastructure\Controller;
 
 use App\Service\Util\Token;
+use Infrastructure\Data\Cookie;
 use Infrastructure\Data\Session;
 use Infrastructure\Kernel\Configuration;
 use Infrastructure\Kernel\ServiceContainer;
@@ -48,6 +49,11 @@ abstract class AbstractController extends AuthenticatorController
     protected function getSession() : Session
     {
         return $this->getService('session');
+    }
+
+    protected function getCookie() : Cookie
+    {
+        return $this->getService('cookie');
     }
 
     protected function createToken(array $payload) : string

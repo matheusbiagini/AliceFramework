@@ -3,7 +3,8 @@
     "psr-4": {
       "App\\": "App/",
       "Infrastructure\\" : "Infrastructure/",
-      "Migration\\" :  "Migration/"
+      "Migration\\" :  "Migration/",
+      "Config\\" : "Config/"
     }
   },
   "require": {

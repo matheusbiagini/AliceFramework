@@ -22,13 +22,20 @@ class Configuration
         return $default;
     }
 
-    private function getEnvironments() : array
+    public function rootPath() : string
     {
         $rootPath = getcwd();
 
         if (PHP_SAPI !== 'cli') {
             $rootPath = '..';
         }
+
+        return $rootPath;
+    }
+
+    private function getEnvironments() : array
+    {
+        $rootPath = $this->rootPath();
 
         return array_merge(
             parse_ini_file($rootPath . '/Docker/env/app.env'),

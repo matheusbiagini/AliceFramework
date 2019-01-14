@@ -19,6 +19,7 @@ class AuthController extends Controller
     public function loginAction(Request $request) : Response
     {
         $this->getSession()->set('name', 'Matheus Biagini');
+        $this->getCookie()->set('language', 'pt-br');
 
         if ($this->getSession()->hasAuthenticated()) {
             return $this->redirect('dashboard');
