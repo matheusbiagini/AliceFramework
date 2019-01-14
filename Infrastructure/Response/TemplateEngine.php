@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Response;
 
+use Infrastructure\Data\Session;
 use Infrastructure\View\Twig\Helper\Helper;
 
 class TemplateEngine implements Response
@@ -44,5 +45,6 @@ class TemplateEngine implements Response
     public function createHelpers() : void
     {
         $this->twig->addGlobal('helper', new Helper());
+        $this->twig->addGlobal('session', Session::session());
     }
 }

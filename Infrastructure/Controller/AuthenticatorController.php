@@ -33,6 +33,7 @@ abstract class AuthenticatorController
         /** @var Session $session */
         $session            = $this->getSession();
         $hasAuthenticated   = $session->hasAuthenticated();
+
         $urlLogoff          = url('logoff');
 
         if (in_array($this->getCurrentAction(), $freeActions)) {
