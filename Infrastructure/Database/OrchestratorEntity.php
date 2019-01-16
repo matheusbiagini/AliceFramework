@@ -53,9 +53,11 @@ abstract class OrchestratorEntity
                 $criteria
             );
 
+        $id = (int) $this->fieldsCollection[$this->getPrimaryKey()];
+
         $this->reset();
 
-        return (int) $this->fieldsCollection[$this->getPrimaryKey()];
+        return $id;
     }
 
     public function flush() : int
