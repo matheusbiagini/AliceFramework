@@ -6,6 +6,14 @@ namespace Infrastructure\Kernel;
 
 class Configuration
 {
+    /** @var bool $isEnvTest */
+    private $isEnvTest;
+
+    public function __construct(bool $isEnvTest = false)
+    {
+        $this->isEnvTest = $isEnvTest;
+    }
+
     /**
      * @param string $key
      * @param mixed $default
@@ -37,9 +45,15 @@ class Configuration
     {
         $rootPath = $this->rootPath();
 
+        $envMysql = parse_ini_file($rootPath . '/Docker/env/mysql.env');
+
+        if ($this->isEnvTest) {
+            $envMysql = parse_ini_file($rootPath . '/Docker/env/mysql-test.env');
+        }
+
         return array_merge(
             parse_ini_file($rootPath . '/Docker/env/app.env'),
-            parse_ini_file($rootPath . '/Docker/env/mysql.env'),
+            $envMysql,
             getenv()
         );
     }

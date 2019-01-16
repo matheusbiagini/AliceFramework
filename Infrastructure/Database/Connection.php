@@ -6,6 +6,7 @@ namespace Infrastructure\Database;
 
 use Doctrine\DBAL\DriverManager;
 use Infrastructure\Kernel\Configuration;
+use Infrastructure\Kernel\ServiceContainer;
 
 class Connection
 {
@@ -23,7 +24,7 @@ class Connection
     public static function getInstance() : self
     {
         if (self::$CONNECTION_INSTANCE === null) {
-            self::$CONNECTION_INSTANCE = new self(new Configuration());
+            self::$CONNECTION_INSTANCE = new self(ServiceContainer::getConfiguration());
         }
 
         return static::$CONNECTION_INSTANCE;

@@ -38,10 +38,12 @@ class Session
         return $_SESSION[self::APP_KEY];
     }
 
-    public function destroy() : void
+    public function destroy(bool $sessionDestroy = true) : void
     {
         $_SESSION[self::APP_KEY] = [];
-        session_destroy();
+        if ($sessionDestroy) {
+            session_destroy();
+        }
     }
 
     public static function session() : self

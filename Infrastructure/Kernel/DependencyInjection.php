@@ -25,7 +25,7 @@ class DependencyInjection
     {
         $containerBuilder = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($containerBuilder, new FileLocator('../Config'));
+        $loader = new YamlFileLoader($containerBuilder, new FileLocator(getcwd() . '/Config'));
         $loader->load('Infrastructure.yml');
         $loader->load('Service.yml');
 

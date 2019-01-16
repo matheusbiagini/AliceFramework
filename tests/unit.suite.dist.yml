@@ -1,0 +1,14 @@
+# Codeception Test Suite Configuration
+#
+# Suite for unit (internal) tests.
+
+modules:
+    enabled:
+        - Asserts
+        - Db
+coverage:
+    enabled: true
+    include:
+        - App/*
+        - Infrastructure/*
+        - Config/Translation/*

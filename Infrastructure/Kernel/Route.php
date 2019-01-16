@@ -10,9 +10,6 @@ use Slim\Slim;
 
 class Route
 {
-    /** @var string  */
-    private const ROUTE_PATH = '../Config/Route.yml';
-
     /** @var mixed[] $routes */
     private $routes;
 
@@ -60,7 +57,7 @@ class Route
     private function extract() : void
     {
         $this->setRoutes(
-            (new Parser())->parse(file_get_contents(self::ROUTE_PATH))
+            (new Parser())->parse(file_get_contents(self::getPathRoutes()))
         );
     }
 
@@ -72,5 +69,10 @@ class Route
     private function getRoutes() : array
     {
         return $this->routes;
+    }
+
+    private static function getPathRoutes() : string
+    {
+        return getcwd() . '/Config/Route.yml';
     }
 }

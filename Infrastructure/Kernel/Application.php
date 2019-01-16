@@ -15,9 +15,10 @@ class Application
         $this->dependencyInjection = $dependencyInjection;
     }
 
-    public function main() : void
+    public function main(Configuration $configuration, bool $buildRouting = true) : void
     {
         ServiceContainer::set($this->dependencyInjection->getContainer());
+        ServiceContainer::setConfiguration($configuration);
 
         #Charset UTF-8 AND America/Sao_Paulo
         header('Content-Type: text/html; charset=UTF-8', true);
@@ -41,9 +42,11 @@ class Application
         ini_set('display_errors', $debug);
         ini_set('display_startup_erros', $debug);
 
-        include '../Config/Global.php';
+        include getcwd() . '/Config/Global.php';
 
-        $this->buildRouting();
+        if ($buildRouting) {
+            $this->buildRouting();
+        }
     }
 
     private function buildRouting() : void

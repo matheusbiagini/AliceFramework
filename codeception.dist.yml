@@ -1,0 +1,39 @@
+actor: Tester
+paths:
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+settings:
+    bootstrap: _bootstrap.php
+    colors: true
+    memory_limit: 1024M
+    shuffle: true
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=mysql;dbname=local_test'
+            user: 'root'
+            password: '123'
+            populate: true
+            populator: >
+              mysql -u $user -p$password -h $host -e "DROP DATABASE IF EXISTS $dbname; CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON *.* TO '$user'@'$host' IDENTIFIED BY '$password';" &&
+              find Migration/Initialization/ -maxdepth 1 -name '*.sql' | sort -n | awk '{ print "source",$0 }' | mysql -u $user -p$password -h $host --batch $dbname &&
+              php migration migrate:run true --env=TEST
+coverage:
+    enabled: true
+    c3_url: 'http://test.dev'
+    include:
+        - App/*.php
+        - Infrastructure/*.php
+        - Config/*.php
+    exclude:
+        - Config/*.yml
+        - Config/Global.php
+        - App/View/*
+        - Migration/*
+        - vendor/*
