@@ -35,7 +35,7 @@ class Route
         return '';
     }
 
-    public function make(Slim $slim) : void
+    public function make(Slim $slim) : Slim
     {
         foreach ($this->getRoutes()['routes'] as $route) {
             foreach ($route['method'] as $method) {
@@ -52,6 +52,8 @@ class Route
         }
 
         $slim->run();
+
+        return $slim;
     }
 
     private function extract() : void
@@ -66,7 +68,7 @@ class Route
         $this->routes = $routes;
     }
 
-    private function getRoutes() : array
+    public function getRoutes() : array
     {
         return $this->routes;
     }

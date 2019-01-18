@@ -15,14 +15,16 @@ class Application
         $this->dependencyInjection = $dependencyInjection;
     }
 
-    public function main(Configuration $configuration, bool $buildRouting = true) : void
+    public function main(Configuration $configuration, bool $buildRouting = true, $ignoreSessionStart = false) : void
     {
         ServiceContainer::set($this->dependencyInjection->getContainer());
         ServiceContainer::setConfiguration($configuration);
 
         #Charset UTF-8 AND America/Sao_Paulo
         header('Content-Type: text/html; charset=UTF-8', true);
-        session_start();
+        if (!$ignoreSessionStart) {
+            session_start();
+        }
         setlocale(LC_ALL, null);
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         setlocale(LC_MONETARY,"pt_BR", "ptb");
@@ -30,8 +32,7 @@ class Application
         #Timeout
         set_time_limit(300);
         #Error handle
-        define('ERR_LEVEL', E_ALL);
-        error_reporting(ERR_LEVEL);
+        error_reporting(E_ALL);
         $debug = '0';
 
         if($this->getConfiguration()->get('MODE', 'dev') === 'dev') {
@@ -57,6 +58,6 @@ class Application
 
     private function getConfiguration() : Configuration
     {
-        return ServiceContainer::get()->get('configuration');
+        return ServiceContainer::getConfiguration();
     }
 }
