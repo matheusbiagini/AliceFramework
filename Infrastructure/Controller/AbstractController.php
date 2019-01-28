@@ -30,6 +30,16 @@ abstract class AbstractController extends AuthenticatorController
         return $this->getService('configuration');
     }
 
+    protected function getSession() : Session
+    {
+        return $this->getService('session');
+    }
+
+    protected function getCookie() : Cookie
+    {
+        return $this->getService('cookie');
+    }
+
     protected function json(array $arguments = []) : Response
     {
         return new Json($arguments);
@@ -46,14 +56,10 @@ abstract class AbstractController extends AuthenticatorController
         return $templateEngine->content($arguments);
     }
 
-    protected function getSession() : Session
+    protected function redirect(string $routeName, array $params = []) : Response
     {
-        return $this->getService('session');
-    }
-
-    protected function getCookie() : Cookie
-    {
-        return $this->getService('cookie');
+        header('Location: ' . url($routeName, $params));
+        return $this->json();
     }
 
     protected function createToken(array $payload) : string
@@ -64,11 +70,5 @@ abstract class AbstractController extends AuthenticatorController
     protected function getToken(string $token) : array
     {
         return Token::decode($token, $this->getConfiguration()->get('SECRET'));
-    }
-
-    protected function redirect(string $routeName, array $params = []) : Response
-    {
-        header('Location: ' . url($routeName, $params));
-        return $this->json();
     }
 }
