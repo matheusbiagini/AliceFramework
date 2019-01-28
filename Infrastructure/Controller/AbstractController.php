@@ -40,7 +40,7 @@ abstract class AbstractController extends AuthenticatorController
         return new TemplateEngine($template, $arguments);
     }
 
-    protected function view(string $template, array $arguments = []) : string
+    protected function partial(string $template, array $arguments = []) : string
     {
         $templateEngine = new TemplateEngine($template, $arguments, false);
         return $templateEngine->content($arguments);
