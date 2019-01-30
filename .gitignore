@@ -38,3 +38,4 @@ CachedContainer.php
 /Docker/env/*.env
 /App/Controller/Test/TestController.php
 /.idea/*
+/web/Upload/Example/*

@@ -5,6 +5,18 @@ routes:
     controller: App\Controller\Test\TestController
     action.result: testAction
     method: ["post", "get"]
+  -
+    name: exampleFileUpload
+    url: /example/file/upload
+    controller: App\Controller\Example\FileExampleController
+    action.result: exampleUploadAction
+    method: ["post", "get"]
+  -
+    name: fileUpload
+    url: /file/upload
+    controller: App\Controller\File\FileController
+    action.result: uploadAction
+    method: ["post"]
 
   - name: logoff
     url: /logoff

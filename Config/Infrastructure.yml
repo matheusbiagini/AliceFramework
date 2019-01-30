@@ -7,3 +7,6 @@ services:
 
   cookie:
     class: Infrastructure\Data\Cookie
+
+  file:
+    class: Infrastructure\File\Service\FileService

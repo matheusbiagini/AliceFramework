@@ -44,4 +44,9 @@ class CreateRequest implements Request
     {
         return isset($this->getServer()['HTTP_X_REQUESTED_WITH']) && $this->getServer()['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
     }
+
+    public function getFiles() : array
+    {
+        return $_FILES;
+    }
 }

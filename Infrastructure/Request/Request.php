@@ -12,4 +12,5 @@ interface Request
     public function getStatusCode() : int;
     public function json() : string;
     public function isAjax() : bool;
+    public function getFiles() : array;
 }

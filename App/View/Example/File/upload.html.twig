@@ -1,0 +1,41 @@
+<h1>Upload {{ language.translate('FILE') }}</h1>
+
+<div id="uploadDiv">
+    <label>{{ language.translate('FILE') }}</label>
+    <p>
+        <input type="file" name="file[]" id="file" onchange="upload();">
+    </p>
+    <p>
+        <div id="message"></div>
+    </p>
+</div>
+
+<script type="application/javascript" src="/Js/Core/Plugins/Jquery/jquery-3.3.1.min.js"></script>
+
+<script>
+    function upload() {
+        var formdata = new FormData();
+        formdata.append( 'file', $( '#file' )[0].files[0] );
+        $('#message').html('{{ language.translate('LOADING') }}...');
+        $.ajax({
+            type: 'POST',
+            url: '/file/upload?typesAccept=.jpg;.jpeg;.gif;.png&dir=/Example/&maxsize=2000000',
+            data: formdata ,
+            processData: false,
+            contentType: false
+        }).done(function (response) {
+            $('#message').html('');
+            console.log(response);
+            $.each(response, function(index, value) {
+                if (value.success == true) {
+                    $('#message').html($('#message').html() + "<p><h2>"+ value.message +"</h2><p>");
+                    $('#message').html($('#message').html() + "<p><a href='" + value.link + "'>" + value.link +"</a><p>");
+                }
+
+                if (value.success == false) {
+                    $('#message').html($('#message').html() + "<p><h2>"+ value.message +"</h2><p>");
+                }
+            });
+        });
+    }
+</script>
