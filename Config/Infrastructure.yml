@@ -10,3 +10,7 @@ services:
 
   file:
     class: Infrastructure\File\Service\FileService
+
+  email:
+    class: Infrastructure\Email\Service\EmailService
+    arguments: ["@configuration"]
