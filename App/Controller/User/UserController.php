@@ -15,7 +15,8 @@ class UserController extends Controller
 {
     public function createAction(Request $request) : Response
     {
-        $user = $this->getUserService()->create(
+        $user = $this->getUserService()->save(
+            null,
             Profile::ADMIN,
             'Matheus Biagini',
             'matheus.biagini@gmail.com',
@@ -23,7 +24,7 @@ class UserController extends Controller
             Status::ACTIVE
         );
 
-        return $this->json(['user' => $user]);
+        return $this->json(['userId' => $user]);
     }
 
     public function getAllAction(Request $request) : Response
