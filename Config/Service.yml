@@ -4,4 +4,4 @@ services:
 
   user.service:
     class: App\Service\User\UserService
-    arguments: ['@user.repository']
+    arguments: ['@user.repository', "@session"]
