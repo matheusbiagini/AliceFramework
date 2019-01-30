@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Util;
+namespace Infrastructure\Data;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;

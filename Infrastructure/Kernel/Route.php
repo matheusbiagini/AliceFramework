@@ -75,6 +75,6 @@ class Route
 
     private static function getPathRoutes() : string
     {
-        return getcwd() . '/Config/Route.yml';
+        return PATH_ROOT . '/Config/Route.yml';
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Util;
+namespace Infrastructure\Data;
 
 abstract class Cryptographer
 {

@@ -8,7 +8,7 @@ use App\Entity\Domain\User;
 use App\Enum\Profile;
 use App\Enum\Status;
 use App\Repository\Domain\UserRepository;
-use App\Service\Util\Cryptographer;
+use Infrastructure\Data\Cryptographer;
 use Codeception\Test\Unit;
 use Infrastructure\Repository\Repository;
 

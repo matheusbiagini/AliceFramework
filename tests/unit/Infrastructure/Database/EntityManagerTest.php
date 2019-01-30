@@ -7,7 +7,7 @@ namespace Test\unit\Infrastructure\Database;
 use App\Entity\Domain\User;
 use App\Enum\Profile;
 use App\Enum\Status;
-use App\Service\Util\Cryptographer;
+use Infrastructure\Data\Cryptographer;
 use Codeception\Test\Unit;
 use Doctrine\DBAL\Connection;
 use Infrastructure\Database\EntityManager;

@@ -33,11 +33,16 @@ class DependencyInjection
         ];
     }
 
+    private function getRootPath() : string
+    {
+        return str_replace(['/web'], [''], getcwd()) . '/Config';
+    }
+
     private function createContainer() : ContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($containerBuilder, new FileLocator(getcwd() . '/Config'));
+        $loader = new YamlFileLoader($containerBuilder, new FileLocator($this->getRootPath()));
 
         foreach ($this->getConfigContainers() as $config) {
             $loader->load($config);

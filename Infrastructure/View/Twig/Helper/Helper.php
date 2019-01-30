@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Infrastructure\View\Twig\Helper;
 
-use App\Service\Util\Cryptographer;
-use App\Service\Util\Token;
+use Infrastructure\Data\Token;
 use Infrastructure\Kernel\Configuration;
 use Infrastructure\Kernel\ServiceContainer;
+use Infrastructure\Data\Cryptographer;
 
 class Helper
 {
