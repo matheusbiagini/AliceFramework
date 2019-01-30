@@ -14,7 +14,7 @@ use Infrastructure\Repository\Repository;
 
 class RepositoryTest extends Unit
 {
-    public function getInstance() : Repository
+    private function getInstance() : Repository
     {
         return new UserRepository();
     }
