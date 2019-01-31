@@ -8,13 +8,17 @@ use App\Enum\Profile;
 use App\Enum\Status;
 use App\Service\User\UserService;
 use Codeception\Test\Unit;
-use Infrastructure\Kernel\ServiceContainer;
+use Infrastructure\Traits\TraitServiceContainer;
 
 class UserServiceTest extends Unit
 {
+    use TraitServiceContainer;
+
     private function getInstance() : UserService
     {
-        return ServiceContainer::get()->get('user.service');
+        return $this
+            ->mockService('email', $this->make($this->getContainer()->get('email'), ['send' => function () { return true; }]))
+            ->get('user.service');
     }
 
     public function testShouldTestAuthenticationSuccessfullyAndUnsuccessfully() : void
@@ -107,5 +111,23 @@ class UserServiceTest extends Unit
         $this->assertEquals($userId, (int)$user['id_user']);
         $this->assertEquals('teste', $user['name']);
         $this->assertEquals('teste@teste.com', $user['email']);
+    }
+
+    public function testShouldExecuteForgotPasswordSuccessfully() : void
+    {
+        $this->getInstance()->save(
+            null,
+            Profile::ADMIN,
+            'teste',
+            'teste@teste.com',
+            '123',
+            Status::ACTIVE
+        );
+
+        $originEmailService = $this->getContainer()->get('email');
+
+        $forgot = $this->getInstance()->forgotPassword('teste@teste.com');
+
+        $this->assertTrue($forgot);
     }
 }
