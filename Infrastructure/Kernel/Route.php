@@ -35,11 +35,17 @@ class Route
         return '';
     }
 
+    public static function getUrlAll() : array
+    {
+        $self = new self();
+        return $self->getRoutes()['routes'] ?? [];
+    }
+
     public function make(Slim $slim) : Slim
     {
         foreach ($this->getRoutes()['routes'] as $route) {
             foreach ($route['method'] as $method) {
-                $request = new CreateRequest();
+                $request = new CreateRequest($slim);
                 $method  = (string) strtolower($method);
                 $slim
                     ->{$method}((string)$route['url'], function() use ($route, $request) {
@@ -50,6 +56,8 @@ class Route
                     ->name((string) $route['name']);
             }
         }
+
+
 
         $slim->run();
 

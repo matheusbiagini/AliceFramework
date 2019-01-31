@@ -1,3 +1,90 @@
-<h1> Login </h1>
+<!DOCTYPE html>
+<html lang="pt">
 
-<p>{{ language.translate('example_complex', { '{name}' : session.get('name')}) }} </p>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Alice Framework</title>
+    <link rel="stylesheet" href="/Iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/Css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/Css/template.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/Img/favicon.png" />
+</head>
+
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth" id="contentLoginAuth">
+            <div class="row w-100">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left p-5">
+                        <div class="brand-logo">
+                            <img src="/Img/logo.svg">
+                        </div>
+                        <h6 class="font-weight-light">{{ language.translate('SIGN_IN_TO_CONTINUE') }}.</h6>
+                        <form class="pt-3">
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-lg" id="inputEmail" placeholder="{{ language.translate('EMAIL') }}">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control form-control-lg" id="inputPassword" placeholder="{{ language.translate('PASSWORD') }}">
+                            </div>
+                            <div class="mt-3">
+                                <a id="buttonSignIn" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="javascript:signIn();">
+                                    {{ language.translate('SIGN_IN') }}
+                                </a>
+                            </div>
+                            <div class="my-2 d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <label class="form-check-label text-muted">
+                                        <input type="checkbox" class="form-check-input" checked>
+                                        {{ language.translate('KEEP_ME_SIGNED_IN') }}
+                                    </label>
+                                </div>
+                                <a href="{{ helper.url('forgotPassword') }}" class="auth-link text-black">{{ language.translate('FORGOT_PASSWORD') }}?</a>
+                            </div>
+                            <!--
+                            <div class="mb-2">
+                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                                    <i class="mdi mdi-facebook mr-2"></i>{{ language.translate('CONNECT_USING_FACEBOOK') }}
+                                </button>
+                            </div>
+
+                            <div class="text-center mt-4 font-weight-light">
+                                {{ language.translate('DONT_HAVE_AN_ACCOUNT') }}? <a href="register.html" class="text-primary">{{ language.translate('CREATE') }}</a>
+                            </div>
+                            -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+
+<!-- @Core -->
+<script src="/Js/Core/bundle.base.js"></script>
+<script src="/Js/Core/Plugins/Jquery-Ui/jquery-ui.min.js"></script>
+<script src="/Js/Core/bundle.addons.js"></script>
+<script src="/util/url/url.js"></script>
+<script src="/util/language/translate.js"></script>
+
+<script src="/Js/Example/off-canvas.js"></script>
+<script src="/Js/Example/misc.js"></script>
+<!-- @endCore -->
+
+<!-- @Login -->
+<script src="/Js/App/Login/Login.class.js"></script>
+
+<script>
+    function signIn() {
+        login.signIn($('#inputEmail').val(), $('#inputPassword').val());
+    }
+</script>
+
+</body>
+
+</html>

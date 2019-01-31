@@ -33,7 +33,6 @@ abstract class AuthenticatorController
         /** @var Session $session */
         $session            = $this->getSession();
         $hasAuthenticated   = $session->hasAuthenticated();
-
         $urlLogoff          = url('logoff');
 
         if (in_array($this->getCurrentAction(), $freeActions)) {
@@ -49,7 +48,7 @@ abstract class AuthenticatorController
             return;
         }
 
-        header("Location: {$urlLogoff}");
+        $request->getSlim()->response->redirect($urlLogoff);
         return;
     }
 }

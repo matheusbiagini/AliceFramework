@@ -32,6 +32,12 @@ class Translate
         return $translate[$key];
     }
 
+    public function getTranslateAll() : array
+    {
+        $language = Cookie::cookie()->get('language');
+        return (new self())->create($language);
+    }
+
     private function create(?string $keyLanguage = self::DEFAULT_LANGUAGE) : array
     {
         $keyLanguage = $keyLanguage === null ? self::DEFAULT_LANGUAGE : $keyLanguage;

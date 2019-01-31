@@ -4,8 +4,23 @@ declare(strict_types=1);
 
 namespace Infrastructure\Request;
 
+use Slim\Slim;
+
 class CreateRequest implements Request
 {
+    /** @var \Slim\Slim $slim */
+    private $slim;
+
+    public function __construct(Slim $slim)
+    {
+        $this->slim = $slim;
+    }
+
+    public function getSlim() : Slim
+    {
+        return $this->slim;
+    }
+
     public function getParam(string $key, $default = null)
     {
         if (!isset($this->getParams()[$key])) {

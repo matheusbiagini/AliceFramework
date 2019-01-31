@@ -1,5 +1,23 @@
 routes:
   -
+    name: index
+    url: /
+    controller: App\Controller\IndexController
+    action.result: indexAction
+    method: ["post", "get"]
+  -
+    name: translateJs
+    url: /util/language/translate.js
+    controller: App\Controller\Util\UtilController
+    action.result: translateJsAction
+    method: ["get"]
+  -
+    name: getUrlJs
+    url: /util/url/url.js
+    controller: App\Controller\Util\UtilController
+    action.result: getUrlJsAction
+    method: ["get"]
+  -
     name: test
     url: /teste
     controller: App\Controller\Test\TestController
@@ -29,6 +47,30 @@ routes:
     controller: App\Controller\Auth\AuthController
     action.result: loginAction
     method: ["post", "get"]
+
+  - name: auth
+    url: /auth
+    controller: App\Controller\Auth\AuthController
+    action.result: authAction
+    method: ["post", "get"]
+
+  - name: forgotPassword
+    url: /forgot/password
+    controller: App\Controller\Auth\AuthController
+    action.result: forgotPasswordAction
+    method: ["get"]
+
+  - name: sendForgotPassword
+    url: /forgot/password/send
+    controller: App\Controller\Auth\AuthController
+    action.result: sendNewPasswordOfForgotPasswordAction
+    method: ["post"]
+
+  - name: dashboard
+    url: /dashboard
+    controller: App\Controller\Dashboard\DashboardController
+    action.result: indexAction
+    method: ["get"]
 
   - name: userCreate
     url: /user/new

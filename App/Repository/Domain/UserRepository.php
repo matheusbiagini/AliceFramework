@@ -34,4 +34,21 @@ class UserRepository extends Repository
 
         return $user === false ? [] : $user;
     }
+
+    public function findByEmailAndStatusActive(string $email) : array
+    {
+        $qb = $this->getEntityManager()->getConnection()->createQueryBuilder();
+        $qb
+            ->select(['*'])
+            ->from($this->getEntityManager()->getTableName())
+            ->where('status = :statusUser')
+            ->setParameter('statusUser', Status::ACTIVE)
+            ->andWhere('email = :emailUser')
+            ->setParameter('emailUser', $email)
+            ->setMaxResults(1);
+
+        $user = $qb->execute()->fetch();
+
+        return $user === false ? [] : $user;
+    }
 }

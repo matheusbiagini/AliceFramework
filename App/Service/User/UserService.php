@@ -6,10 +6,15 @@ namespace App\Service\User;
 
 use App\Entity\Domain\User;
 use App\Entity\Domain\UserLogLogin;
+use App\Enum\Profile;
 use App\Repository\Domain\UserRepository;
 use Infrastructure\Data\Cryptographer;
+use Infrastructure\Data\Document;
 use Infrastructure\Data\Session;
+use Infrastructure\Email\Service\EmailService;
+use Infrastructure\Email\Template\EmailTemplate;
 use Infrastructure\Request\CreateRequest;
+use Slim\Slim;
 
 class UserService
 {
@@ -19,10 +24,14 @@ class UserService
     /** @var Session $session */
     private $session;
 
-    public function __construct(UserRepository $userRepository, Session $session)
+    /** @var EmailService $emailService */
+    private $emailService;
+
+    public function __construct(UserRepository $userRepository, Session $session, EmailService $emailService)
     {
         $this->userRepository = $userRepository;
         $this->session        = $session;
+        $this->emailService   = $emailService;
     }
 
     public function save(?int $userId = null, int $profileId, string $name, string $email, string $password, int $status) : int
@@ -65,15 +74,47 @@ class UserService
         return $user;
     }
 
-    public function authenticate(string $email, string $password) : bool
+    public function authenticate(?string $email, ?string $password) : bool
     {
+        if (empty($email) || empty($password) || !Document::isEmail($email)) {
+            return false;
+        }
+
         $user = $this->userRepository->authenticateUser($email, Cryptographer::hash($password));
 
         if (count($user) > 0) {
+            $user['profile'] = (new Profile())->getDisplayName()[$user['id_profile']];
             $this->session->setAuthenticated();
             $this->session->set('user', $user);
             $this->createLogLogin((int)$user['id_user']);
             return true;
+        }
+
+        return false;
+    }
+
+    public function forgotPassword(?string $email) : bool
+    {
+        if (empty($email) || !Document::isEmail($email)) {
+            return false;
+        }
+
+        $user = $this->userRepository->findByEmailAndStatusActive($email);
+
+        if (count($user) > 0) {
+            $newPassword = Cryptographer::generatePassword(10);
+            $entity = new User();
+            $entity
+                ->set($entity->getPrimaryKey(), $user[$entity->getPrimaryKey()])
+                ->set('password', Cryptographer::hash($newPassword))
+                ->flush();
+
+            $this->emailService
+                ->addSubject(translate('FORGOT_PASSWORD'))
+                ->addBody(EmailTemplate::forgotPassword($email, $user['name'], $newPassword))
+                ->addTo($email);
+
+            return $this->emailService->send();
         }
 
         return false;
@@ -85,7 +126,7 @@ class UserService
         $log
             ->set('id_user', $userId)
             ->set('dateLogin',date("Y-m-d H:i:s"))
-            ->set('info', json_encode((new CreateRequest())->getServer()))
+            ->set('info', json_encode((new CreateRequest(new Slim()))->getServer()))
             ->set('id_user', $userId);
 
         $log->flush();
