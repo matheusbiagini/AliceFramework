@@ -8,7 +8,7 @@ use AliceMigration\Management\Database\Database;
 use AliceMigration\Migration\Migrate;
 use App\Enum\Profile;
 use App\Enum\Status;
-use App\Service\Util\Cryptographer;
+use Infrastructure\Data\Cryptographer;
 
 class MigrateVersion1547144232 implements Migrate
 {
