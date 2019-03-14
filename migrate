@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+require __DIR__ . '/vendor/autoload.php';
+use AliceMigration\Management\Configuration\Configuration;
+use AliceMigration\Migration\Migration;
+$config = new \Infrastructure\Kernel\Configuration(false);
+global $argv;
+if (in_array('--env=TEST', $argv)) {
+    $config = new \Infrastructure\Kernel\Configuration(true);
+}
+$connection = new \Infrastructure\Database\Connection($config);
+$migration = new Migration(
+    new Configuration(
+        $connection->getPdo(),
+        getcwd() . "/Migration/",
+        'Migration'
+    )
+);
+$migration->run();
