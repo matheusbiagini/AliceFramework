@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infrastructure\Data;
 
+use Infrastructure\Kernel\Configuration;
+
 abstract class Cryptographer
 {
     public static function hash(string $code) : string
@@ -13,7 +15,7 @@ abstract class Cryptographer
 
     public static function salt() : string
     {
-        return 'acad7a87f32599ad844a7de36be51b22';
+        return (string)Configuration::getInstance()->get('SECRET');
     }
 
     public static function generatePassword(int $length = 7, bool $upper = true, bool $lower = true, bool $numbers = true, bool $symbols = true) : string

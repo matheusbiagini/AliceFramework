@@ -57,4 +57,9 @@ class Configuration
             getenv()
         );
     }
+
+    public static function getInstance(bool $isEnvTest = false) : self
+    {
+        return new self($isEnvTest);
+    }
 }
