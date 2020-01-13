@@ -78,7 +78,7 @@ class RepositoryTest extends Unit
         $this->createUserForTest();
         $this->createUserForTest();
 
-        $users = $this->getInstance()->setPagination($this->getInstance()->commonQuery(), 2, 0)->execute()->fetchAll();
+        $users = $this->getInstance()->setPagination($this->getInstance()->commonQuery(), 1, 2)->execute()->fetchAll();
 
         $this->assertCount(2, $users);
     }

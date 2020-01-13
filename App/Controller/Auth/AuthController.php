@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function loginAction(Request $request) : Response
     {
         if ($this->getSession()->hasAuthenticated()) {
-            return $this->redirect('dashboard');
+            return $this->redirect('adminDashboard');
         }
 
         return $this->render('Login/login.html.twig');
@@ -61,7 +61,7 @@ class AuthController extends Controller
 
         $redirect = $request->getParam('redirect', null);
 
-        return $this->redirect($redirect === null ? 'login' : $redirect);
+        return $this->redirect($redirect === null ? 'adminLogin' : $redirect);
     }
 
     private function getUserService() : UserService

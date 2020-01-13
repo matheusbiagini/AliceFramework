@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Request;
 
+use Infrastructure\View\Twig\Helper\Helper;
 use Slim\Slim;
 
 interface Request
@@ -16,4 +17,5 @@ interface Request
     public function isAjax() : bool;
     public function getFiles() : array;
     public function getSlim() : Slim;
+    public function getHelper() : Helper;
 }

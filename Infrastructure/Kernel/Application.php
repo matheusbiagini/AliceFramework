@@ -43,7 +43,7 @@ class Application
         ini_set('display_errors', $debug);
         ini_set('display_startup_erros', $debug);
 
-        include str_replace(['/web'], [''], getcwd()) . '/Config/Global.php';
+        include str_replace(['/web', '\web'], ['', ''], getcwd()) . '/Config/Global.php';
 
         if ($buildRouting) {
             $this->buildRouting();

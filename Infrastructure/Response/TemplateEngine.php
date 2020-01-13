@@ -13,7 +13,7 @@ class TemplateEngine implements Response
     /** @var string */
     private const PATH = '../App/View/';
 
-    /** @var \Twig_Environment */
+    /** @var \Twig\Environment */
     private $twig;
 
     /** @var string $template */
@@ -21,7 +21,7 @@ class TemplateEngine implements Response
 
     public function __construct(string $template, array $arguments = [], bool $print = true)
     {
-        $this->twig     = new \Twig_Environment(new \Twig_Loader_Filesystem([self::PATH]));
+        $this->twig     = new \Twig\Environment(new \Twig\Loader\FilesystemLoader([self::PATH]));
         $this->template = $template;
 
         $this->createHelpers();

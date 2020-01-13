@@ -1,0 +1,66 @@
+{% extends 'Master/masterpage.html.twig' %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ language.translate('USERS') }}</h4>
+            <div class="add-items d-flex">
+                <input type="text" class="form-control todo-list-input" id="filterUser" placeholder="{{  language.translate('SEARCH_USERS') }}">
+                <button class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn" id="add-task"
+                        onclick="location.href='{{ helper.url('adminUserCreate') }}'">{{ language.translate('ADD_USER') }}
+                </button>
+            </div>
+
+            <hr>
+
+            <h4 class="card-title">{{ language.translate('USER_LIST') }}</h4>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ language.translate('NAME') }}</th>
+                        <th>{{ language.translate('EMAIL') }}</th>
+                        <th>{{ language.translate('PROFILE') }}</th>
+                        <th>{{ language.translate('ACTIONS') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody id="userBodyList"></tbody>
+                </table>
+            </div>
+            <!-- @autoScrollPagination (REQUIRED)-->
+            <input type="hidden" id="autoScrollPagination" value="true">
+            <input type="hidden" id="autoScrollPage" value="1">
+            <!-- loading -->
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="/Js/App/User/User.class.js"></script>
+    <script>
+    $(document).ready(function () {
+        user.usersList();
+        /** @autoscroll (REQUIRED)**/
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() >= $(document).height()){
+                user.usersList();
+            }
+        });
+
+        $('#filterUser').keypress(function (e) {
+            if (e.which == 13) {
+                $('#autoScrollPage').val('1');
+                $('#autoScrollPagination').val('true');
+                user.usersList(true);
+            }
+        });
+
+    });
+</script>
+{% endblock %}

@@ -44,7 +44,7 @@ class UserServiceTest extends Unit
     public function testShouldSaveUserSuccessfully() : void
     {
         #new
-        $userId = $this->getInstance()->save(
+        $user = $this->getInstance()->save(
             null,
             Profile::ADMIN,
             'teste',
@@ -52,6 +52,8 @@ class UserServiceTest extends Unit
             '123',
             Status::ACTIVE
         );
+
+        $userId = $user['userId'];
 
         $this->assertIsInt($userId);
         $this->assertTrue($userId > 0);
@@ -65,7 +67,7 @@ class UserServiceTest extends Unit
                 'teste@teste.com',
                 '123',
                 Status::ACTIVE
-            ),
+            )['userId'],
             $userId
         );
     }
@@ -97,7 +99,7 @@ class UserServiceTest extends Unit
 
     public function testShouldGetUserById() : void
     {
-        $userId = $this->getInstance()->save(
+        $user = $this->getInstance()->save(
             null,
             Profile::ADMIN,
             'teste',
@@ -105,6 +107,8 @@ class UserServiceTest extends Unit
             '123',
             Status::ACTIVE
         );
+
+        $userId = $user['userId'];
 
         $user = $this->getInstance()->getById($userId);
 

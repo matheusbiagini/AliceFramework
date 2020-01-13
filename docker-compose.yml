@@ -12,12 +12,12 @@ services:
     ports:
       - 3306:3306
     networks:
-      - AliceFramework_default
+      - ApplicationDocker_default
 
   redis:
     image: redis:3-alpine
     networks:
-      - AliceFramework_default
+      - ApplicationDocker_default
 
   app:
     image: matheusbiagini/docker-lamp:dev
@@ -36,7 +36,7 @@ services:
     environment:
       PHP_IDE_CONFIG: "serverName=aliceframework.com"
     networks:
-      - AliceFramework_default
+      - ApplicationDocker_default
 
   selenium:
     image: selenium/standalone-chrome
@@ -44,12 +44,12 @@ services:
     links:
       - app:test.com
     networks:
-      - AliceFramework_default
+      - ApplicationDocker_default
 
 volumes:
   database:
 
 networks:
-  AliceFramework_default:
+  ApplicationDocker_default:
     driver: bridge
-    name: AliceFramework_default
+    name: ApplicationDocker_default

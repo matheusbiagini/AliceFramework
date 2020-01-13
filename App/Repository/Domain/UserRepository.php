@@ -51,4 +51,27 @@ class UserRepository extends Repository
 
         return $user === false ? [] : $user;
     }
+
+    public function listUsersActive(?string $filter, int $page, int $totalPerPage) : array
+    {
+        $qb = $this->getEntityManager()->getConnection()->createQueryBuilder();
+        $qb
+            ->select(['*'])
+            ->from($this->getEntityManager()->getTableName())
+            ->where('status = :statusUser')
+            ->setParameter('statusUser', Status::ACTIVE)
+            ->orderBy('name', 'asc');
+
+        if (!empty($filter)) {
+            $qb->andWhere("email like '%" . $filter . "%' OR name like '%" . $filter . "%'");
+        }
+
+        $pagination = $this->createPagination($qb, $totalPerPage);
+
+        $qb = $this->setPagination($qb, $page, $totalPerPage);
+
+        $users = $qb->execute()->fetchAll();
+
+        return ['users' => $users === false ? [] : $users, 'pagination' => $pagination];
+    }
 }

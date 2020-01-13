@@ -23,7 +23,7 @@ modules:
             populator: >
               mysql -u $user -p$password -h $host -e "DROP DATABASE IF EXISTS $dbname; CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON *.* TO '$user'@'$host' IDENTIFIED BY '$password';" &&
               find Migration/Initialization/ -maxdepth 1 -name '*.sql' | sort -n | awk '{ print "source",$0 }' | mysql -u $user -p$password -h $host --batch $dbname &&
-              php migration migrate:run true --env=TEST
+              php migrate migrate:run true --env=TEST
 coverage:
     enabled: true
     c3_url: 'http://test.dev'

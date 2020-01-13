@@ -1,0 +1,73 @@
+<html>
+<head>
+    <style>
+        /**
+        * Set the margins of the PDF to 0
+        * so the background image will cover the entire page.
+        **/
+        @page {
+            margin: 0cm 0cm;
+        }
+
+        /**
+        * Define the real margins of the content of your PDF
+        * Here you will fix the margins of the header and footer
+        * Of your background image.
+        **/
+        body {
+            margin-top:    1cm;
+            margin-bottom: 1cm;
+            margin-left:   3cm;
+            margin-right:  1cm;
+            font-size: 20px;
+        }
+
+        /**
+        * Define the width, height, margins and position of the watermark.
+        **/
+        #watermark {
+            position: fixed;
+            bottom:   0px;
+            left:     0px;
+            /** The width and height may change
+                according to the dimensions of your letterhead
+            **/
+            width:    29.7cm;
+            height:   21cm;
+
+            /** Your watermark should be behind every content**/
+            z-index:  -1000;
+        }
+
+        #messageCreateAt {
+            margin-top:    1.5cm;
+            margin-bottom: 1cm;
+            margin-left:   18cm;
+            margin-right:  1cm;
+        }
+        #message {
+            margin-top: 4cm;
+            margin-right:  1cm;
+            width:    23cm;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+<div id="watermark">
+    <img src="{{certificateImage}}" height="100%" width="100%" />
+</div>
+
+<main>
+    <!-- The content of your PDF here -->
+    <div id="messageCreateAt">
+        {{messageCreateAt}} <br><br>
+        {{createAt}} <br>
+        {{certificationNumber}} <br>
+    </div>
+    <div id="message">
+        <p>{{message}}</p>
+    </div>
+</main>
+</body>
+</html>

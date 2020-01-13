@@ -116,4 +116,34 @@ abstract class Document
 
         return $digitValue;
     }
+
+    public static function isValidProductCode(string $typeCertificate, ?string $productCode) : bool
+    {
+        $initialCharacter = [];
+        switch (strtolower($typeCertificate)) {
+            case 'nat':
+                $initialCharacter = ['n', 'N'];
+                break;
+            case 'cui':
+                $initialCharacter = ['c', 'C'];
+                break;
+            case 'brst':
+                $initialCharacter = ['b', 'B'];
+                break;
+        }
+
+        if (empty($productCode)) {
+            return false;
+        }
+
+        if (count($initialCharacter) === 0) {
+            return true;
+        }
+
+        if (in_array(substr($productCode, 0, 1), $initialCharacter)) {
+            return true;
+        }
+
+        return false;
+    }
 }

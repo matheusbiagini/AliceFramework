@@ -49,4 +49,12 @@ abstract class Cryptographer
         // retorna a senha embaralhada com "str_shuffle" com o tamanho definido pela variável $length
         return substr(str_shuffle($password),0,$length);
     }
+
+    public static function isInThePasswordPolicy(string $password) : bool
+    {
+        return preg_match('/[a-z]/', $password) // tem pelo menos uma letra minúscula
+            && preg_match('/[A-Z]/', $password) // tem pelo menos uma letra maiúscula
+            && preg_match('/[0-9]/', $password) // tem pelo menos um número
+            && preg_match('/^[\w$@]{6,}$/', $password); // tem 6 ou mais caracteres
+    }
 }

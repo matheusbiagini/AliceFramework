@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Alice Framework</title>
+    <title>{% block title %} Alice Framework - Admin - Login {% endblock %}</title>
     <link rel="stylesheet" href="/Iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/Css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/Css/template.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="/Img/favicon.png" />
+    <link rel="shortcut icon" href="/Img/favicon.ico" />
 </head>
 
 <body>
@@ -42,19 +42,8 @@
                                         {{ language.translate('KEEP_ME_SIGNED_IN') }}
                                     </label>
                                 </div>
-                                <a href="{{ helper.url('forgotPassword') }}" class="auth-link text-black">{{ language.translate('FORGOT_PASSWORD') }}?</a>
+                                <a href="{{ helper.url('adminForgotPassword') }}" class="auth-link text-black">{{ language.translate('FORGOT_PASSWORD') }}?</a>
                             </div>
-                            <!--
-                            <div class="mb-2">
-                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                                    <i class="mdi mdi-facebook mr-2"></i>{{ language.translate('CONNECT_USING_FACEBOOK') }}
-                                </button>
-                            </div>
-
-                            <div class="text-center mt-4 font-weight-light">
-                                {{ language.translate('DONT_HAVE_AN_ACCOUNT') }}? <a href="register.html" class="text-primary">{{ language.translate('CREATE') }}</a>
-                            </div>
-                            -->
                         </form>
                     </div>
                 </div>
@@ -83,6 +72,14 @@
     function signIn() {
         login.signIn($('#inputEmail').val(), $('#inputPassword').val());
     }
+
+    $(document).ready(function () {
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                signIn();
+            }
+        });
+    });
 </script>
 
 </body>

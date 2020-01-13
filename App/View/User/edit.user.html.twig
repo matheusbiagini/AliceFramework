@@ -1,0 +1,52 @@
+{% extends 'Master/masterpage.html.twig' %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-body" id="formUserContent">
+
+            <input type="hidden" id="userId" name="userId" value="{{ id }}">
+
+            <h4 class="card-title"> {{ language.translate('USER') }}</h4>
+            <p class="card-description"> {{ language.translate('USER_DATA') }} </p>
+            <div class="form-group">
+                <label for="userName">{{ language.translate('NAME') }}</label>
+                <input type="text" class="form-control" id="userName" value="{{ user.name }}"
+                       placeholder="{{ language.translate('NAME') }}">
+            </div>
+            <div class="form-group">
+                <label for="userEmail">{{ language.translate('EMAIL') }}</label>
+                <input type="email" class="form-control" id="userEmail" value="{{ user.email }}"
+                       placeholder="{{ language.translate('EMAIL') }}">
+            </div>
+
+            {% if mode == 'create' %}
+                <div class="form-group">
+                    <label for="userPassword">{{ language.translate('PASSWORD') }}</label>
+                    <input type="password" class="form-control" id="userPassword"
+                           placeholder="{{ language.translate('PASSWORD') }}">
+                </div>
+            {% endif %}
+
+            {% if session.get('user').id_profile == '1' %}
+                <div class="form-group">
+                    <label for="userProfile">{{ language.translate('PROFILE') }}</label>
+                    <select class="form-control" id="userProfile">
+                        {% for key, profile in profiles %}
+                            <option value="{{ key }}"
+                                    {% if user.id_profile == key %} selected {% endif %}
+                            >{{ profile }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            <button type="button" onclick="user.save()" class="btn-save btn btn-gradient-primary mr-2">{{ language.translate('SAVE') }}</button>
+            <button class="btn btn-light"
+                    onclick="location.href='{{ helper.url('adminIndex') }}';">{{ language.translate('CANCEL') }}</button>
+        </div>
+    </div>
+
+
+    <script src="/Js/App/User/User.class.js"></script>
+
+{% endblock %}

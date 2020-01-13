@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\View\Twig\Helper;
 
+use Infrastructure\Data\FormatDate;
 use Infrastructure\Data\Token;
 use Infrastructure\Kernel\Configuration;
 use Infrastructure\Kernel\ServiceContainer;
@@ -41,6 +42,11 @@ class Helper
     public function decode(string $token) : array
     {
         return Token::decode($token, $this->getConfiguration()->get('SECRET'));
+    }
+
+    public function formatDate(?string $data, string $format = 'PT') : string
+    {
+        return FormatDate::format($data, $format);
     }
 
     /**

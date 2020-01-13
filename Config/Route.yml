@@ -1,91 +1,126 @@
 routes:
-  -
-    name: index
-    url: /
-    controller: App\Controller\IndexController
-    action.result: indexAction
-    method: ["post", "get"]
-  -
-    name: translateJs
+  - name: translateJs
     url: /util/language/translate.js
     controller: App\Controller\Util\UtilController
     action.result: translateJsAction
     method: ["get"]
-  -
-    name: getUrlJs
+
+  - name: getUrlJs
     url: /util/url/url.js
     controller: App\Controller\Util\UtilController
     action.result: getUrlJsAction
     method: ["get"]
-  -
-    name: test
+
+  - name: test
     url: /teste
     controller: App\Controller\Test\TestController
     action.result: testAction
     method: ["post", "get"]
-  -
-    name: exampleFileUpload
+
+  - name: exampleFileUpload
     url: /example/file/upload
     controller: App\Controller\Example\FileExampleController
     action.result: exampleUploadAction
     method: ["post", "get"]
-  -
-    name: fileUpload
+
+  - name: fileUpload
     url: /file/upload
     controller: App\Controller\File\FileController
     action.result: uploadAction
     method: ["post"]
 
-  - name: logoff
-    url: /logoff
+  - name: adminIndex
+    url: /admin
+    controller: App\Controller\AdminIndexController
+    action.result: adminIndexAction
+    method: ["post", "get"]
+
+  - name: adminLogoff
+    url: /admin/logoff
     controller: App\Controller\Auth\AuthController
     action.result: logoffAction
     method: ["post", "get"]
 
-  - name: login
-    url: /login
+  - name: adminLogin
+    url: /admin/login
     controller: App\Controller\Auth\AuthController
     action.result: loginAction
     method: ["post", "get"]
 
-  - name: auth
-    url: /auth
+  - name: adminAuth
+    url: /admin/auth
     controller: App\Controller\Auth\AuthController
     action.result: authAction
     method: ["post", "get"]
 
-  - name: forgotPassword
-    url: /forgot/password
+  - name: adminForgotPassword
+    url: /admin/forgot/password
     controller: App\Controller\Auth\AuthController
     action.result: forgotPasswordAction
     method: ["get"]
 
-  - name: sendForgotPassword
-    url: /forgot/password/send
+  - name: adminSendForgotPassword
+    url: /admin/forgot/password/send
     controller: App\Controller\Auth\AuthController
     action.result: sendNewPasswordOfForgotPasswordAction
     method: ["post"]
 
-  - name: dashboard
-    url: /dashboard
+  - name: adminDashboard
+    url: /admin/dashboard
     controller: App\Controller\Dashboard\DashboardController
     action.result: indexAction
     method: ["get"]
 
-  - name: userCreate
-    url: /user/new
+  - name: adminUserEdit
+    url: /admin/user/edit
+    controller: App\Controller\User\UserController
+    action.result: editAction
+    method: ["post", "get"]
+
+  - name: adminUserCreate
+    url: /admin/user/new
     controller: App\Controller\User\UserController
     action.result: createAction
     method: ["post", "get"]
 
-  - name: userGetAll
-    url: /users
+  - name: adminChangePassword
+    url: /admin/user/change/password
     controller: App\Controller\User\UserController
-    action.result: getAllAction
+    action.result: changePasswordAction
+    method: ["post", "get"]
+
+  - name: adminUserSave
+    url: /admin/user/save
+    controller: App\Controller\User\UserController
+    action.result: saveAction
+    method: ["post"]
+
+  - name: adminChangePasswordSave
+    url: /admin/user/change/password/save
+    controller: App\Controller\User\UserController
+    action.result: saveChangePasswordAction
+    method: ["post"]
+
+  - name: adminUsersList
+    url: /admin/users
+    controller: App\Controller\User\UserController
+    action.result: listAction
     method: ["get"]
 
-  - name: userGetById
-    url: /user
+  - name: adminUsersListPagination
+    url: /admin/users/list
     controller: App\Controller\User\UserController
-    action.result: getByIdAction
+    action.result: listUsersAction
     method: ["get"]
+
+  - name: adminUserDelete
+    url: /admin/user/delete
+    controller: App\Controller\User\UserController
+    action.result: deleteAction
+    method: ["post"]
+
+  - name: index
+    url: /
+    controller: App\Controller\Auth\AuthController
+    action.result: loginAction
+    method: ["post", "get"]

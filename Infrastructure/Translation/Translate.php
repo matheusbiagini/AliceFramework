@@ -96,6 +96,6 @@ class Translate
 
     private function getPathTranslate() : string
     {
-        return str_replace(['/web'], [''], getcwd() . '/Config/Translation');
+        return str_replace(['/web', '\web'], ['', ''], getcwd() . '/Config/Translation');
     }
 }

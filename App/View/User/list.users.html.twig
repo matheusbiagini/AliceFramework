@@ -1,0 +1,23 @@
+{% for user in users %}
+    <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.profile }}</td>
+        <td>
+            <button class="btn btn-success btn-sm"
+                    onclick="location.href='{{ helper.url('adminUserEdit') }}?user={{ helper.id(user.id_user) }}'"
+            >{{ language.translate('EDIT') }}</button>
+            <button class="btn btn-danger btn-sm"
+                onclick="user.deleteUser('{{ helper.id(user.id_user) }}')"
+            >{{ language.translate('DELETE') }}</button>
+        </td>
+    </tr>
+{% endfor %}
+
+{% if users|length == 0 %}
+    <script>
+        /** @autoscroll Pause: REQUIRED**/
+        $('#autoScrollPagination').val('false');
+    </script>
+{% endif %}
+

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infrastructure\Request;
 
+use Infrastructure\Data\AntiInjection;
+use Infrastructure\View\Twig\Helper\Helper;
 use Slim\Slim;
 
 class CreateRequest implements Request
@@ -27,7 +29,9 @@ class CreateRequest implements Request
             return $default;
         }
 
-        return $this->getParams()[$key];
+        //return $this->getParams()[$key];
+
+        return AntiInjection::sanitize($this->getParams()[$key]);
     }
 
     public function getServer() : array
@@ -63,5 +67,10 @@ class CreateRequest implements Request
     public function getFiles() : array
     {
         return $_FILES;
+    }
+
+    public function getHelper(): Helper
+    {
+        return new Helper();
     }
 }

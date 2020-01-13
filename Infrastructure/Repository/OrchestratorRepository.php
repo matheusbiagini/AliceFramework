@@ -44,7 +44,7 @@ abstract class OrchestratorRepository
         return $qb->execute()->fetch();
     }
 
-    public function findBy(array $criteria = [], array $fields = ['*'], $limit = null, $offset = null)
+    public function findBy(array $criteria = [], array $fields = ['*'], $limit = null, $offset = null, bool $returnQueryBuilder = false)
     {
         $qb = $this->commonQuery($criteria, $fields, $limit, $offset);
 
@@ -54,6 +54,10 @@ abstract class OrchestratorRepository
 
         foreach ($this->orderBy as $order) {
             $qb->addOrderBy($order['key'], $order['order']);
+        }
+
+        if ($returnQueryBuilder === true) {
+            return $qb;
         }
 
         return $qb->execute()->fetchAll();
@@ -95,9 +99,11 @@ abstract class OrchestratorRepository
         return $this;
     }
 
-    public function setPagination(QueryBuilder $qb, int $limit, int $offset) : QueryBuilder
+    public function setPagination(QueryBuilder $qb, int $page, int $totalPerPage) : QueryBuilder
     {
-        return $qb->setFirstResult($offset)->setMaxResults($limit);
+        $offset = (int) (($page - 1) * $totalPerPage);
+
+        return $qb->setFirstResult($offset)->setMaxResults($totalPerPage);
     }
 
     protected function createPagination(QueryBuilder $qb, int $totalPerPage) : array

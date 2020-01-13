@@ -32,8 +32,16 @@ abstract class AuthenticatorController
     {
         /** @var Session $session */
         $session            = $this->getSession();
+
+        /** Painel Admin */
         $hasAuthenticated   = $session->hasAuthenticated();
-        $urlLogoff          = url('logoff');
+        $urlLogoff          = url('adminLogoff');
+
+        /** Client (Website)*/
+        if ($this instanceof WebsiteController) {
+            $hasAuthenticated   = $session->hasWebsiteAuthenticated();
+            $urlLogoff          = url('websiteLogoff');
+        }
 
         if (in_array($this->getCurrentAction(), $freeActions)) {
             return;
@@ -48,7 +56,7 @@ abstract class AuthenticatorController
             return;
         }
 
-        $request->getSlim()->response->redirect($urlLogoff);
-        return;
+        header('Location: ' . $urlLogoff);
+        exit();
     }
 }

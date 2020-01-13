@@ -74,4 +74,9 @@ abstract class OrchestratorEntity
         $this->fieldsCollection = [];
         return $this;
     }
+
+    public function __destruct()
+    {
+        \Infrastructure\Database\Connection::close();
+    }
 }

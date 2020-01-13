@@ -16,6 +16,7 @@ class EmailService
     private $mailerFrom;
     private $mailerPassword;
     private $mailerEncryption;
+    private $mailerPort;
 
     private $body;
     private $subject;
@@ -37,6 +38,7 @@ class EmailService
         $this->mailerFrom       = $configuration->get('MAILER_FROM_EMAIL');
         $this->mailerPassword   = $configuration->get('MAILER_FROM_PASSWORD');
         $this->mailerEncryption = $configuration->get('MAILER_ENCRYPTION', 'tls');
+        $this->mailerEncryption = $configuration->get('MAILER_PORT', '587');
     }
 
     public function addBody(string $body) : self
@@ -97,23 +99,26 @@ class EmailService
         $this->mailer = new PHPMailer(true);
 
         //Server settings
-        $this->mailer->SMTPDebug = 0;                                 // Enable verbose debug output
+        $this->mailer->SMTPDebug = 0;                                 // Enable verbose debug output 0:1
         $this->mailer->isSMTP();                                      // Set mailer to use SMTP
         $this->mailer->Host = $this->mailerHost;                      // Specify main and backup SMTP servers
         $this->mailer->SMTPAuth = true;                               // Enable SMTP authentication
         $this->mailer->Username = $this->mailerFrom;                  // SMTP username
         $this->mailer->Password = $this->mailerPassword;              // SMTP password
-        //$this->mailer->SMTPSecure = $this->mailerEncryption;          // Enable TLS encryption, `ssl` also accepted
-        $this->mailer->Port = 587;                                    // TCP port to connect to
+        $this->mailer->SMTPSecure = $this->mailerEncryption;          // Enable TLS encryption, `ssl` also accepted
+        $this->mailer->Port = $this->mailerPort;                      // TCP port to connect to 587|465
 
-        #Locaweb lixo
-        $this->mailer->SMTPOptions = array(
+        // Active Charset utf-8
+        $this->mailer->CharSet = 'UTF-8';
+
+        /* Localweb e host da vida
+         * $this->mailer->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,
                 'verify_peer_name' => false,
                 'allow_self_signed' => true
             )
-        );
+        );*/
 
         //Recipients
         if (empty($this->from)) {
@@ -148,12 +153,21 @@ class EmailService
         try {
             $this->compose();
             $this->mailer->isHTML(true);
-            $this->mailer->Subject = $this->subject;
-            $this->mailer->Body    = $this->body;
+            $this->mailer->Subject = $this->textEncode($this->subject);
+            $this->mailer->Body    = $this->textEncode($this->body);
             $this->mailer->send();
             return true;
         } catch (PhpMailerException $e) {
             throw new ErrorSendingEmail($e->getMessage());
         }
+    }
+
+    private function textEncode(?string $text) : ?string
+    {
+        if (empty($text)) {
+            return '';
+        }
+
+        return utf8_decode(utf8_encode($text));
     }
 }

@@ -6,11 +6,11 @@ function Login() {
 
         $.ajax({
             type: 'POST',
-            url: url('auth'),
+            url: url('adminAuth'),
             data: {email : email, password : password } ,
         }).done(function (response) {
             if (response.success == true) {
-                location.href = url('dashboard');
+                location.href = url('adminDashboard');
                 return;
             }
 
@@ -28,12 +28,12 @@ function Login() {
 
         $.ajax({
             type: 'POST',
-            url: url('sendForgotPassword'),
+            url: url('adminSendForgotPassword'),
             data: {email : email} ,
         }).done(function (response) {
             if (response.success == true) {
                 alert(language.translate('PASSWORD_REQUEST_SENT_TO_SUCCESS'));
-                location.href = url('login');
+                location.href = url('adminLogin');
                 return;
             }
 

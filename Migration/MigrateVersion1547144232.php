@@ -17,7 +17,7 @@ class MigrateVersion1547144232 implements Migrate
     {
         $status   = Status::ACTIVE;
         $profile  = Profile::ADMIN;
-        $password = Cryptographer::hash('123');
+        $password = Cryptographer::hash('123456');
 
         $database->getConnection()->executeQuery("
             INSERT INTO user (id_profile, name, email, password, status)

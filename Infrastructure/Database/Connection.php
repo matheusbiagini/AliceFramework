@@ -13,12 +13,20 @@ class Connection
     /** @var Configuration $configuration */
     private $configuration;
 
+    /** @var \PDO */
+    private static $PDO;
+
+    /** @var \Doctrine\DBAL\Connection */
+    private static $DBAL_CONNECTION;
+
     /** @var Connection */
     private static $CONNECTION_INSTANCE;
 
     public function __construct(Configuration $configuration)
     {
         $this->configuration = $configuration;
+        self::$PDO = $this->createPdo();
+        self::$DBAL_CONNECTION = $this->createDbalConnection();
     }
 
     public static function getInstance() : self
@@ -30,7 +38,7 @@ class Connection
         return static::$CONNECTION_INSTANCE;
     }
 
-    public function getPdo() : \PDO
+    public function createPdo() : \PDO
     {
         $host       = $this->configuration->get('MYSQL_HOST', 'mysql');
         $database   = $this->configuration->get('MYSQL_DATABASE', '');
@@ -48,8 +56,17 @@ class Connection
         );
     }
 
-    /** return dbal instance */
+    public function getPdo() : \PDO
+    {
+        return self::$PDO;
+    }
+
     public function getConnection(): \Doctrine\DBAL\Connection
+    {
+        return self::$DBAL_CONNECTION;
+    }
+
+    public function createDbalConnection(): \Doctrine\DBAL\Connection
     {
         return DriverManager::getConnection(
             array('pdo' => $this->getPdo()),
@@ -72,5 +89,17 @@ class Connection
     public function identifier() : string
     {
         return '#ID.' . rand(1, 200000);
+    }
+
+    public static function close()
+    {
+        self::$CONNECTION_INSTANCE = null;
+        self::$PDO = null;
+        self::$DBAL_CONNECTION = null;
+    }
+
+    public function __destruct()
+    {
+        self::close();
     }
 }

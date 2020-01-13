@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Controller;
 
-use App\Service\Util\Token;
+use Infrastructure\Data\Token;
 use Infrastructure\Data\Cookie;
 use Infrastructure\Data\Session;
 use Infrastructure\Kernel\Configuration;

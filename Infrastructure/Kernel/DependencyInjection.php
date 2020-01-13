@@ -35,7 +35,7 @@ class DependencyInjection
 
     private function getRootPath() : string
     {
-        return str_replace(['/web'], [''], getcwd()) . '/Config';
+        return str_replace(['/web', '\web'], ['', ''], getcwd()) . '/Config';
     }
 
     private function createContainer() : ContainerBuilder
