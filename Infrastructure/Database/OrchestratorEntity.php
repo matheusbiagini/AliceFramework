@@ -75,6 +75,14 @@ abstract class OrchestratorEntity
         return $this;
     }
 
+    public function delete(array $condition) : int
+    {
+        return $this->getConnection()->delete(
+            $this->getTableName(),
+            $condition
+        );
+    }
+
     public function __destruct()
     {
         \Infrastructure\Database\Connection::close();

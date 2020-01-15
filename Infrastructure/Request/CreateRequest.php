@@ -31,7 +31,11 @@ class CreateRequest implements Request
 
         //return $this->getParams()[$key];
 
-        return AntiInjection::sanitize($this->getParams()[$key]);
+        if (is_string($this->getParams()[$key])) {
+            return AntiInjection::sanitize($this->getParams()[$key]);
+        }
+
+        return $this->getParams()[$key];
     }
 
     public function getServer() : array
